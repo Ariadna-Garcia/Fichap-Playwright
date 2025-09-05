@@ -1,0 +1,32 @@
+<testsuites id="" name="" tests="12" failures="0" skipped="0" errors="0" time="71.34340700000001">
+<testsuite name="login.spec.js" timestamp="2025-09-05T14:36:02.147Z" hostname="Dev" tests="4" failures="0" skipped="0" time="22.827" errors="0">
+<testcase name="Login Tests @Regression @Login › @Smoke - Login exitoso" classname="login.spec.js" time="8.044">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por campos vacios" classname="login.spec.js" time="4.36">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por usuario incorrecto" classname="login.spec.js" time="5.325">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por contraseña incorrecta" classname="login.spec.js" time="5.098">
+</testcase>
+</testsuite>
+<testsuite name="login.spec.js" timestamp="2025-09-05T14:36:02.147Z" hostname="Test" tests="4" failures="0" skipped="0" time="22.418" errors="0">
+<testcase name="Login Tests @Regression @Login › @Smoke - Login exitoso" classname="login.spec.js" time="7.3">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por campos vacios" classname="login.spec.js" time="4.076">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por usuario incorrecto" classname="login.spec.js" time="5.923">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por contraseña incorrecta" classname="login.spec.js" time="5.119">
+</testcase>
+</testsuite>
+<testsuite name="login.spec.js" timestamp="2025-09-05T14:36:02.147Z" hostname="chromium" tests="4" failures="0" skipped="0" time="22.998" errors="0">
+<testcase name="Login Tests @Regression @Login › @Smoke - Login exitoso" classname="login.spec.js" time="7.451">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por campos vacios" classname="login.spec.js" time="4.819">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por usuario incorrecto" classname="login.spec.js" time="5.742">
+</testcase>
+<testcase name="Login Tests @Regression @Login › Login fallido por contraseña incorrecta" classname="login.spec.js" time="4.986">
+</testcase>
+</testsuite>
+</testsuites>

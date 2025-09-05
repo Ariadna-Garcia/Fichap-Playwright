@@ -12,7 +12,7 @@ module.exports = defineConfig({
   
   // Reporter configuration
   reporter: [
-    ['html'],
+    ['html',{ outputFolder: 'playwright-report', open: 'never' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
     ['json', { outputFile: 'test-results/results.json' }],
     ['./reporters/test-manager-reporter.js']
@@ -44,8 +44,8 @@ module.exports = defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-
+    }],
+/*
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
@@ -73,4 +73,5 @@ module.exports = defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
+  */
 });

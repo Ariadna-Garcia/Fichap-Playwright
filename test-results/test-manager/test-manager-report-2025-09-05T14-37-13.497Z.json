@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 71
+  },
+  "results": [
+    {
+      "title": "@Smoke - Login exitoso",
+      "status": "passed",
+      "duration": 8044,
+      "projectName": "Dev"
+    },
+    {
+      "title": "Login fallido por campos vacios",
+      "status": "passed",
+      "duration": 4360,
+      "projectName": "Dev"
+    },
+    {
+      "title": "Login fallido por usuario incorrecto",
+      "status": "passed",
+      "duration": 5325,
+      "projectName": "Dev"
+    },
+    {
+      "title": "Login fallido por contraseña incorrecta",
+      "status": "passed",
+      "duration": 5098,
+      "projectName": "Dev"
+    },
+    {
+      "title": "@Smoke - Login exitoso",
+      "status": "passed",
+      "duration": 7300,
+      "projectName": "Test"
+    },
+    {
+      "title": "Login fallido por campos vacios",
+      "status": "passed",
+      "duration": 4076,
+      "projectName": "Test"
+    },
+    {
+      "title": "Login fallido por usuario incorrecto",
+      "status": "passed",
+      "duration": 5923,
+      "projectName": "Test"
+    },
+    {
+      "title": "Login fallido por contraseña incorrecta",
+      "status": "passed",
+      "duration": 5119,
+      "projectName": "Test"
+    },
+    {
+      "title": "@Smoke - Login exitoso",
+      "status": "passed",
+      "duration": 7451,
+      "projectName": "chromium"
+    },
+    {
+      "title": "Login fallido por campos vacios",
+      "status": "passed",
+      "duration": 4819,
+      "projectName": "chromium"
+    },
+    {
+      "title": "Login fallido por usuario incorrecto",
+      "status": "passed",
+      "duration": 5742,
+      "projectName": "chromium"
+    },
+    {
+      "title": "Login fallido por contraseña incorrecta",
+      "status": "passed",
+      "duration": 4986,
+      "projectName": "chromium"
+    }
+  ]
+}
