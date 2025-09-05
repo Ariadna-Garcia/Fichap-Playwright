@@ -10,14 +10,18 @@
     "test:test": "TEST_ENVIRONMENT=Test playwright test --project=Test",
     "test:smoke": "playwright test --grep '@Smoke'",
     "test:regression": "playwright test --grep '@Regression'",
-    "test:send-tm": "TEST_MANAGER_RUN_NAME='Manual Run' playwright test",
+    "test:local": "playwright test --project=chromium --headed",
+    "test:debug": "playwright test --debug",
     "report": "playwright show-report",
-    "postinstall": "npx playwright install"
+    "report:open": "npx playwright show-report",
+    "install-browsers": "npx playwright install",
+    "install-deps": "npx playwright install-deps",
+    "postinstall": "npm run install-browsers"
   },
-  "keywords": [],
+  "keywords": ["playwright", "testing", "automation", "e2e"],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Playwright testing suite with Discord integration",
   "devDependencies": {
     "@playwright/test": "^1.55.0"
   },
@@ -25,5 +29,8 @@
     "axios": "^1.11.0",
     "dayjs": "^1.11.18",
     "dotenv": "^17.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
