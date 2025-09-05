@@ -12,7 +12,8 @@
     "test:regression": "playwright test --grep '@Regression'",
     "test:send-tm": "TEST_MANAGER_RUN_NAME='Manual Run' playwright test",
     "report": "playwright show-report",
-    "install": "npm install && npx playwright install"
+    "install": "npm install && npx playwright install",
+    "postinstall": "npx playwright install"
   },
   "keywords": [],
   "author": "",
