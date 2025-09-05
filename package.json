@@ -6,11 +6,13 @@
   "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
+    
     "test:dev": "TEST_ENVIRONMENT=Dev playwright test --project=Dev",
     "test:test": "TEST_ENVIRONMENT=Test playwright test --project=Test",
+
+
     "test:smoke": "playwright test --grep '@Smoke'",
     "test:regression": "playwright test --grep '@Regression'",
-    "test:api": "playwright test --grep '@API'",
     "test:send-tm": "TEST_MANAGER_RUN_NAME='Manual Run' playwright test",
     "report": "playwright show-report",
     "install": "npm install && npx playwright install"

@@ -1,48 +1,73 @@
-// playwright.config.js
 const { defineConfig, devices } = require('@playwright/test');
+require('dotenv').config();
 
 module.exports = defineConfig({
   testDir: './tests',
-  /* Run tests in files in parallel */
+  
+  // Global Test Settings
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  
+  // Reporter configuration
+  reporter: [
+    ['html'],
+    ['junit', { outputFile: 'test-results/junit.xml' }],
+    ['json', { outputFile: 'test-results/results.json' }],
+    ['./reporters/test-manager-reporter.js']
+  ],
 
-  reporter: 'html',
-    
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://dashboard-test.fichap.com',
-    
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    baseURL: process.env.BASE_URL || 'https://playwright.dev',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
-  /* Configure projects for major browsers */
+  // Projects for different environments
   projects: [
+    {
+      name: 'Dev',
+      use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.DEV_BASE_URL || 'https://api-dev.fichap.com',
+      },
+    },
+    {
+      name: 'Test',
+      use: { 
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.TEST_BASE_URL || 'https://api-test.fichap.com',
+      },
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    }
-    ]
-/* 
+    },
+
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-
-   {
+    {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
+    
+    // Mobile browsers
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'Mobile Safari',
+      use: { ...devices['iPhone 12'] },
+    },
+    
   ],
 
-  /* Run your local dev server before starting the tests */
+  // Web Server (opcional)
   // webServer: {
   //   command: 'npm run start',
   //   url: 'http://127.0.0.1:3000',
