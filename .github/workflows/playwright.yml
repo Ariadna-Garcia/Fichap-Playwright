@@ -215,6 +215,12 @@ jobs:
         REPO_NAME: ${{ github.event.repository.name }}
         WORKFLOW_NAME: ${{ github.workflow }}
       run: |
+        # Verificar si el webhook está configurado
+        if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+          echo "DISCORD_WEBHOOK_URL no está configurado, saltando notificación"
+          exit 0
+        fi
+        
         if [ "$TEST_RESULT" = "success" ]; then
           STATUS_COLOR=65280
           STATUS_TITLE="✅ Todos los Tests Completados Exitosamente"
