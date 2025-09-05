@@ -3,13 +3,13 @@ require('dotenv').config();
 
 module.exports = defineConfig({
   testDir: './tests',
-  
+
   // Global Test Settings
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  
+
   // Reporter configuration
   reporter: [
     ['html', { 
@@ -19,6 +19,10 @@ module.exports = defineConfig({
     ['junit', { outputFile: 'test-results/junit.xml' }],
     ['json', { outputFile: 'test-results/results.json' }],
     ['list'],
+
+    // ➕ Allure reporter
+    ...(process.env.CI || process.env.GITHUB_ACTIONS ? [['allure-playwright']] : []),
+
     // Discord reporter solo en CI/CD
     ...(process.env.CI || process.env.GITHUB_ACTIONS ? [['./discord-reporter.js']] : [])
   ],
@@ -28,15 +32,12 @@ module.exports = defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    // Configurar contexto para mejores reportes
     actionTimeout: 30000,
     navigationTimeout: 30000,
   },
 
-  // Configuración de outputs
   outputDir: 'test-results',
 
-  // Projects for different environments
   projects: [
     {
       name: 'Dev',
@@ -58,7 +59,6 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { 
         ...devices['Desktop Chrome'],
-        // Configuraciones adicionales para mejor debugging
         launchOptions: {
           slowMo: process.env.CI ? 0 : 100,
         }
@@ -72,8 +72,6 @@ module.exports = defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
-    
-    // Mobile browsers (comentados por defecto)
     /*
     {
       name: 'Mobile Chrome',
@@ -85,12 +83,4 @@ module.exports = defineConfig({
     },
     */
   ],
-
-  // Web Server (opcional para aplicaciones locales)
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  //   timeout: 120 * 1000,
-  // },
 });

@@ -2,7 +2,7 @@
   "config": {
     "configFile": "C:\\Workspace\\Fichap\\Fichap-Playwright\\playwright.config.js",
     "rootDir": "C:/Workspace/Fichap/Fichap-Playwright/tests",
-    "forbidOnly": true,
+    "forbidOnly": false,
     "fullyParallel": true,
     "globalSetup": null,
     "globalTeardown": null,
@@ -10,14 +10,16 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {},
+    "metadata": {
+      "actualWorkers": 6
+    },
     "preserveOutput": "always",
     "reporter": [
       [
         "html",
         {
           "outputFolder": "playwright-report",
-          "open": "never"
+          "open": "on-failure"
         }
       ],
       [
@@ -33,7 +35,7 @@
         }
       ],
       [
-        "C:\\Workspace\\Fichap\\Fichap-Playwright\\reporters\\test-manager-reporter.js",
+        "list",
         null
       ]
     ],
@@ -46,24 +48,44 @@
       {
         "outputDir": "C:/Workspace/Fichap/Fichap-Playwright/test-results",
         "repeatEach": 1,
-        "retries": 2,
-        "metadata": {},
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
         "id": "Dev",
         "name": "Dev",
         "testDir": "C:/Workspace/Fichap/Fichap-Playwright/tests",
         "testIgnore": [],
         "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+          "/.*\\.spec\\.(js|ts)/"
         ],
         "timeout": 30000
       },
       {
         "outputDir": "C:/Workspace/Fichap/Fichap-Playwright/test-results",
         "repeatEach": 1,
-        "retries": 2,
-        "metadata": {},
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
         "id": "Test",
         "name": "Test",
+        "testDir": "C:/Workspace/Fichap/Fichap-Playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.spec\\.(js|ts)/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Workspace/Fichap/Fichap-Playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "chromium",
+        "name": "chromium",
         "testDir": "C:/Workspace/Fichap/Fichap-Playwright/tests",
         "testIgnore": [],
         "testMatch": [
@@ -74,10 +96,28 @@
       {
         "outputDir": "C:/Workspace/Fichap/Fichap-Playwright/test-results",
         "repeatEach": 1,
-        "retries": 2,
-        "metadata": {},
-        "id": "chromium",
-        "name": "chromium",
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Workspace/Fichap/Fichap-Playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Workspace/Fichap/Fichap-Playwright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "webkit",
+        "name": "webkit",
         "testDir": "C:/Workspace/Fichap/Fichap-Playwright/tests",
         "testIgnore": [],
         "testMatch": [
@@ -90,28 +130,883 @@
     "updateSnapshots": "missing",
     "updateSourceMethod": "patch",
     "version": "1.55.0",
-    "workers": 1,
+    "workers": 6,
     "webServer": null
   },
-  "suites": [],
-  "errors": [
+  "suites": [
     {
-      "message": "SyntaxError: C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\documents.spec.js: Unexpected token (46:4)\n\n\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m",
-      "stack": "SyntaxError: C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\documents.spec.js: Unexpected token (46:4)\n\n\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m",
-      "location": {
-        "file": "C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\documents.spec.js",
-        "line": 46,
-        "column": 4
-      },
-      "snippet": "\u001b[90m   at \u001b[39mdocuments.spec.js:46\n\n\u001b[0m \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 46 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m"
+      "title": "login.spec.js",
+      "file": "login.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Login Tests @Regression @Login",
+          "file": "login.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "@Smoke - Login exitoso",
+              "ok": false,
+              "tags": [
+                "Regression",
+                "Login",
+                "Smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Dev",
+                  "projectName": "Dev",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 32222,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\login.spec.js",
+                            "column": 68,
+                            "line": 21
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('a').filter({ hasText: 'HR Core' })\nExpected: visible\nReceived: <element(s) not found>\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('a').filter({ hasText: 'HR Core' })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \n \u001b[90m 20 |\u001b[39m     \u001b[90m// THEN - Usuario es redirigido al dashboard y ve contenido esperado\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'a'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'HR Core'\u001b[39m }))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\login.spec.js:21:68\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:04.072Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-Dev\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-Dev\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-Dev\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-Dev\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-bb321dbbddefd74da92d",
+              "file": "login.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "Login fallido por campos vacios",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Dev",
+                  "projectName": "Dev",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 31554,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:03.975Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-0e724e11c11ecc1f909b",
+              "file": "login.spec.js",
+              "line": 27,
+              "column": 1
+            },
+            {
+              "title": "Login fallido por usuario incorrecto",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Dev",
+                  "projectName": "Dev",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 18386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:03.914Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-014062e08ae7a1888927",
+              "file": "login.spec.js",
+              "line": 44,
+              "column": 4
+            },
+            {
+              "title": "Login fallido por contraseña incorrecta",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Dev",
+                  "projectName": "Dev",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 30212,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:03.925Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-06ab924750e2f7df7771",
+              "file": "login.spec.js",
+              "line": 63,
+              "column": 4
+            },
+            {
+              "title": "@Smoke - Login exitoso",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login",
+                "Smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Test",
+                  "projectName": "Test",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 28855,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:03.916Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-e5e2495c0f67ec368767",
+              "file": "login.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "Login fallido por campos vacios",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Test",
+                  "projectName": "Test",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 24260,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:03.940Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-4b0aeba8b4a1056f8e56",
+              "file": "login.spec.js",
+              "line": 27,
+              "column": 1
+            },
+            {
+              "title": "Login fallido por usuario incorrecto",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Test",
+                  "projectName": "Test",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 13749,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:31.025Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-c85b65ba87d8981eca49",
+              "file": "login.spec.js",
+              "line": 44,
+              "column": 4
+            },
+            {
+              "title": "Login fallido por contraseña incorrecta",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Test",
+                  "projectName": "Test",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 15516,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:29.235Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-667f004fdc3b8ab85a04",
+              "file": "login.spec.js",
+              "line": 63,
+              "column": 4
+            },
+            {
+              "title": "@Smoke - Login exitoso",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login",
+                "Smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 29607,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:38.713Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-eb3850793e3fef0be905",
+              "file": "login.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "Login fallido por campos vacios",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 8308,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:39.553Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-48787ada98096cd7b914",
+              "file": "login.spec.js",
+              "line": 27,
+              "column": 1
+            },
+            {
+              "title": "Login fallido por usuario incorrecto",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 17086,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:40.358Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-0666bb39652b7cfa7cbd",
+              "file": "login.spec.js",
+              "line": 44,
+              "column": 4
+            },
+            {
+              "title": "Login fallido por contraseña incorrecta",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25647,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:41.423Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-7df99f3977459ed273e9",
+              "file": "login.spec.js",
+              "line": 63,
+              "column": 4
+            },
+            {
+              "title": "@Smoke - Login exitoso",
+              "ok": false,
+              "tags": [
+                "Regression",
+                "Login",
+                "Smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 5,
+                      "status": "timedOut",
+                      "duration": 33726,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\login.spec.js",
+                            "column": 68,
+                            "line": 21
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('a').filter({ hasText: 'HR Core' })\nExpected: visible\nReceived: <element(s) not found>\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('a').filter({ hasText: 'HR Core' })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \n \u001b[90m 20 |\u001b[39m     \u001b[90m// THEN - Usuario es redirigido al dashboard y ve contenido esperado\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'a'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[32m'HR Core'\u001b[39m }))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Workspace\\Fichap\\Fichap-Playwright\\tests\\login.spec.js:21:68\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:47.150Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-firefox\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-firefox\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-firefox\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regression-Login-Smoke---Login-exitoso-firefox\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-661c97e8e0e8bb7ad6e1",
+              "file": "login.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "Login fallido por campos vacios",
+              "ok": false,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 2,
+                      "status": "timedOut",
+                      "duration": 33550,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:47.349Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regressi-bbe0a-n-fallido-por-campos-vacios-firefox\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regressi-bbe0a-n-fallido-por-campos-vacios-firefox\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regressi-bbe0a-n-fallido-por-campos-vacios-firefox\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Workspace\\Fichap\\Fichap-Playwright\\test-results\\login-Login-Tests-Regressi-bbe0a-n-fallido-por-campos-vacios-firefox\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-41cfbc9238b8d45d065e",
+              "file": "login.spec.js",
+              "line": 27,
+              "column": 1
+            },
+            {
+              "title": "Login fallido por usuario incorrecto",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 29433,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:06:50.951Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-e01837d39a78b1bf327c",
+              "file": "login.spec.js",
+              "line": 44,
+              "column": 4
+            },
+            {
+              "title": "Login fallido por contraseña incorrecta",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 18579,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:07:05.158Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-fc33e1d59d272eaca3f9",
+              "file": "login.spec.js",
+              "line": 63,
+              "column": 4
+            },
+            {
+              "title": "@Smoke - Login exitoso",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login",
+                "Smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26524,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:07:12.479Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-96b122b60c21f66d37ab",
+              "file": "login.spec.js",
+              "line": 7,
+              "column": 3
+            },
+            {
+              "title": "Login fallido por campos vacios",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 18292,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:07:13.090Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-a5e68039eb4e7d36eedb",
+              "file": "login.spec.js",
+              "line": 27,
+              "column": 1
+            },
+            {
+              "title": "Login fallido por usuario incorrecto",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 11875,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:07:28.255Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-558a6d1f5cf4f4f28839",
+              "file": "login.spec.js",
+              "line": 44,
+              "column": 4
+            },
+            {
+              "title": "Login fallido por contraseña incorrecta",
+              "ok": true,
+              "tags": [
+                "Regression",
+                "Login"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 11813,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-05T19:07:30.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "badc1754af1944f68b2b-82c6e987eb17c923d686",
+              "file": "login.spec.js",
+              "line": 63,
+              "column": 4
+            }
+          ]
+        }
+      ]
     }
   ],
+  "errors": [],
   "stats": {
-    "startTime": "2025-09-05T15:13:09.002Z",
-    "duration": 64.01700000000005,
-    "expected": 0,
+    "startTime": "2025-09-05T19:06:01.896Z",
+    "duration": 100462.194,
+    "expected": 17,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 3,
     "flaky": 0
   }
 }

@@ -1,3 +1,4 @@
+
 name: Playwright Tests
 
 on:
@@ -6,30 +7,21 @@ on:
   pull_request:
     branches: [ main, develop ]
   schedule:
-    # Ejecutar tests automáticamente todos los días a las 9:00 AM UTC
     - cron: '0 9 * * *'
   workflow_dispatch:
-    # Permitir ejecución manual
     inputs:
       environment:
         description: 'Environment to test'
         required: true
         default: 'test'
         type: choice
-        options:
-        - dev
-        - test
-        - staging
+        options: [dev, test, staging]
       browsers:
         description: 'Browsers to test'
         required: true
         default: 'chromium'
         type: choice
-        options:
-        - chromium
-        - firefox
-        - webkit
-        - all
+        options: [chromium, firefox, webkit, all]
 
 jobs:
   test:
@@ -44,7 +36,7 @@ jobs:
             (github.event.inputs.browsers && fromJSON(format('["{0}"]', github.event.inputs.browsers))) ||
             fromJSON('["chromium"]')
           }}
-    
+
     steps:
     - name: 🛒 Checkout code
       uses: actions/checkout@v4
@@ -75,6 +67,19 @@ jobs:
       env:
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
+    - name: 📊 Generate Allure Report
+      if: always()
+      run: |
+        npx allure generate allure-results --clean -o allure-report
+
+    - name: 📤 Upload Allure Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report-${{ matrix.browser }}-${{ github.run_number }}
+        path: allure-report/
+        retention-days: 30
+
     - name: 📁 Upload test results
       uses: actions/upload-artifact@v4
       if: always()
@@ -93,32 +98,37 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
-  # Job para desplegar el reporte HTML
   deploy-report:
     needs: test
     runs-on: ubuntu-latest
     if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
-    
+
     steps:
     - name: 🛒 Checkout code
       uses: actions/checkout@v4
 
-    - name: 📥 Download all artifacts
+    - name: 📥 Download HTML Artifacts
       uses: actions/download-artifact@v4
       with:
         pattern: html-report-*
         path: reports/
         merge-multiple: true
 
+    - name: 📥 Download Allure Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        pattern: allure-report-*
+        path: reports/allure
+        merge-multiple: true
+
     - name: 📋 Create index page
       run: |
         mkdir -p public/reports/${{ github.run_number }}
-        if [ -d "reports/" ]; then
-          cp -r reports/* public/reports/${{ github.run_number }}/
-        fi
-        
-        # Crear página de índice simple
-        cat > public/index.html << 'EOF'
+        cp -r reports/* public/reports/${{ github.run_number }}/
+        mkdir -p public/reports/${{ github.run_number }}/allure
+        cp -r reports/allure/* public/reports/${{ github.run_number }}/allure/
+
+        cat > public/index.html << EOF
         <!DOCTYPE html>
         <html>
         <head>
@@ -135,10 +145,8 @@ jobs:
             <h1>🎭 Playwright Test Reports</h1>
             <ul class="report-list">
                 <li>
-                    <a href="reports/${{ github.run_number }}/index.html" class="report-link">
-                        📄 Latest Report - Build #${{ github.run_number }}
-                    </a>
-                    <br>
+                    <a href="reports/${{ github.run_number }}/index.html" class="report-link">📄 HTML Report - Build #${{ github.run_number }}</a><br>
+                    <a href="reports/${{ github.run_number }}/allure/index.html" class="report-link">📊 Allure Report - Build #${{ github.run_number }}</a><br>
                     <small>Generated: $(date)</small>
                 </li>
             </ul>
@@ -153,136 +161,3 @@ jobs:
         publish_dir: public
         keep_files: true
 
-    - name: 📤 Send report link to Discord
-      if: always()
-      env:
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        REPO_OWNER: ${{ github.repository_owner }}
-        REPO_NAME: ${{ github.event.repository.name }}
-        RUN_NUMBER: ${{ github.run_number }}
-        RUN_ID: ${{ github.run_id }}
-        SERVER_URL: ${{ github.server_url }}
-        REPOSITORY: ${{ github.repository }}
-        REF_NAME: ${{ github.ref_name }}
-        SHA: ${{ github.sha }}
-        TEST_RESULT: ${{ needs.test.result }}
-      run: |
-        # Verificar si el webhook está configurado
-        if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-          echo "DISCORD_WEBHOOK_URL no está configurado, saltando notificación"
-          exit 0
-        fi
-        
-        STATUS_COLOR=3447003
-        STATUS_TITLE="📄 Reporte HTML Disponible"
-        
-        if [ "$TEST_RESULT" = "failure" ]; then
-          STATUS_COLOR=16711680
-          STATUS_TITLE="📄 Reporte HTML Disponible (Con Fallos)"
-        fi
-        
-        COMMIT_SHA=$(echo "$SHA" | cut -c1-7)
-        TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
-        
-        cat > payload.json << EOF
-        {
-          "embeds": [{
-            "title": "$STATUS_TITLE",
-            "description": "El reporte detallado está disponible en GitHub Pages",
-            "color": $STATUS_COLOR,
-            "fields": [
-              {
-                "name": "🔗 Enlaces del Reporte",
-                "value": "[📄 Ver Reporte HTML](https://${REPO_OWNER}.github.io/${REPO_NAME}/reports/${RUN_NUMBER}) \\n[📁 Descargar Artifacts](${SERVER_URL}/${REPOSITORY}/actions/runs/${RUN_ID})",
-                "inline": false
-              },
-              {
-                "name": "ℹ️ Información",
-                "value": "**Build:** #${RUN_NUMBER} \\n**Branch:** ${REF_NAME} \\n**Commit:** \`${COMMIT_SHA}\`",
-                "inline": true
-              }
-            ],
-            "footer": {
-              "text": "GitHub Actions",
-              "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            },
-            "timestamp": "$TIMESTAMP"
-          }]
-        }
-        EOF
-        
-        curl -X POST "$DISCORD_WEBHOOK_URL" \
-          -H "Content-Type: application/json" \
-          -d @payload.json
-
-  # Job para notificación final consolidada
-  notify-final:
-    needs: [test, deploy-report]
-    runs-on: ubuntu-latest
-    if: always()
-    
-    steps:
-    - name: 📊 Send final status to Discord
-      if: always()
-      env:
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        TEST_RESULT: ${{ needs.test.result }}
-        ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
-        BROWSERS: ${{ github.event.inputs.browsers || 'chromium' }}
-        SERVER_URL: ${{ github.server_url }}
-        REPOSITORY: ${{ github.repository }}
-        RUN_ID: ${{ github.run_id }}
-        REPO_OWNER: ${{ github.repository_owner }}
-        REPO_NAME: ${{ github.event.repository.name }}
-        WORKFLOW_NAME: ${{ github.workflow }}
-      run: |
-        # Verificar si el webhook está configurado
-        if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-          echo "DISCORD_WEBHOOK_URL no está configurado, saltando notificación"
-          exit 0
-        fi
-        
-        if [ "$TEST_RESULT" = "success" ]; then
-          STATUS_COLOR=65280
-          STATUS_TITLE="✅ Todos los Tests Completados Exitosamente"
-          STATUS_DESC="🎉 ¡Excelente! Todos los tests pasaron sin problemas."
-          STATUS_TEXT="✅ ÉXITO"
-        else
-          STATUS_COLOR=16711680
-          STATUS_TITLE="❌ Tests Completados con Errores"  
-          STATUS_DESC="⚠️ Algunos tests fallaron. Revisar reportes para más detalles."
-          STATUS_TEXT="❌ FALLO"
-        fi
-        
-        TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
-        
-        cat > final_payload.json << EOF
-        {
-          "embeds": [{
-            "title": "$STATUS_TITLE",
-            "description": "$STATUS_DESC",
-            "color": $STATUS_COLOR,
-            "fields": [
-              {
-                "name": "📊 Resumen Final",
-                "value": "**Estado:** $STATUS_TEXT \\n**Ambiente:** $ENVIRONMENT \\n**Navegadores:** $BROWSERS",
-                "inline": true
-              },
-              {
-                "name": "🔗 Enlaces Importantes",
-                "value": "[🔗 Ver Workflow]($SERVER_URL/$REPOSITORY/actions/runs/$RUN_ID) \\n[📁 Ver Repositorio]($SERVER_URL/$REPOSITORY) \\n[📄 Reportes HTML](https://$REPO_OWNER.github.io/$REPO_NAME)",
-                "inline": true
-              }
-            ],
-            "footer": {
-              "text": "Pipeline completado • $WORKFLOW_NAME",
-              "icon_url": "https://playwright.dev/img/playwright-logo.svg"
-            },
-            "timestamp": "$TIMESTAMP"
-          }]
-        }
-        EOF
-        
-        curl -X POST "$DISCORD_WEBHOOK_URL" \
-          -H "Content-Type: application/json" \
-          -d @final_payload.json
