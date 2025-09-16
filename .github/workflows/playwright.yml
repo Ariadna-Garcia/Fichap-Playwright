@@ -51,7 +51,6 @@ jobs:
 
       - name: 🎭 Run Playwright tests (HTML reporter limpio)
         run: |
-          rm -rf playwright-report test-results
           npx playwright test --project=${{ matrix.browser }} --reporter=html
         env:
           NODE_ENV: ${{ github.event.inputs.environment || 'test' }}
