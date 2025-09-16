@@ -35,54 +35,45 @@ jobs:
           }}
 
     steps:
-    - name: 🛒 Checkout code
-      uses: actions/checkout@v4
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
 
-    - name: 🔧 Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-    - name: 📦 Install dependencies
-      run: |
-        npm ci
-        npx playwright install --with-deps ${{ matrix.browser }}
+      - name: 📦 Install dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps ${{ matrix.browser }}
 
-    - name: 🌍 Set environment variables
-      run: |
-        echo "PROJECT_NAME=Fichap Playwright Tests" >> $GITHUB_ENV
-        echo "TEST_ENVIRONMENT=${{ github.event.inputs.environment || 'test' }}" >> $GITHUB_ENV
-        echo "REPOSITORY_URL=${{ github.server_url }}/${{ github.repository }}" >> $GITHUB_ENV
-        echo "BRANCH_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
-        echo "BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
-        echo "CI_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+      - name: 🎭 Run Playwright tests (HTML reporter)
+        # Si tu config ya define reporter html, igual no molesta; esto lo fuerza por CLI
+        run: |
+          npx playwright test --project=${{ matrix.browser }} --reporter=html
+        env:
+          NODE_ENV: ${{ github.event.inputs.environment || 'test' }}
 
-    - name: 🎭 Run Playwright tests
-      run: npx playwright test --project=${{ matrix.browser }}
-      env:
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: 🗜️ Zip Playwright HTML report
+        if: always()
+        run: |
+          test -d playwright-report || (echo "No se encontró playwright-report" && exit 1)
+          mkdir -p zipped
+          # Opcional: incluir trazas si las generás (descomenta la línea siguiente)
+          # cp -r test-results playwright-report/_traces 2>/dev/null || true
+          zip -r "zipped/playwright-report-${{ matrix.browser }}-${{ github.run_number }}.zip" playwright-report
 
-    - name: 📊 Generate Allure Report
-      if: always()
-      run: |
-        npx allure generate allure-results --clean -o allure-report
-
-    - name: 🗜️ Zip Allure Report
-      if: always()
-      run: |
-        mkdir -p zipped
-        zip -r "zipped/allure-report-${{ matrix.browser }}-${{ github.run_number }}.zip" allure-report
-
-    - name: 📤 Send Allure Report ZIP to Discord
-      if: always()
-      env:
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      run: |
-        curl -X POST \
-          -F "payload_json={
-            \"username\": \"Playwright Reporter 🤖\",
-            \"content\": \"✅ Allure Report ZIP - Build #${{ github.run_number }}\n🔒 Repository: ${{ github.repository }}\n🌱 Branch: ${{ github.ref_name }}\"
-          }" \
-          -F "file1=@zipped/allure-report-${{ matrix.browser }}-${{ github.run_number }}.zip;type=application/zip" \
-          $DISCORD_WEBHOOK_URL
+      - name: 📤 Send ZIP to Discord
+        if: always()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          curl -X POST \
+            -F "payload_json={
+              \"username\": \"Playwright Reporter 🤖\",
+              \"content\": \"🧪 Playwright HTML Report - Build #${{ github.run_number }}\\n📦 Navegador: ${{ matrix.browser }}\\n📌 Repo: ${{ github.repository }}\\n🌿 Branch: ${{ github.ref_name }}\"
+            }" \
+            -F "file1=@zipped/playwright-report-${{ matrix.browser }}-${{ github.run_number }}.zip;type=application/zip" \
+            "$DISCORD_WEBHOOK_URL"
