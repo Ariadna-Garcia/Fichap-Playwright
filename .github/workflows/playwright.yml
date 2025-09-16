@@ -6,8 +6,8 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
-  schedule:
-    - cron: '0 9 * * *'
+  #schedule:
+   # - cron: '0 9 * * *'
   workflow_dispatch:
     inputs:
       environment:
@@ -153,6 +153,38 @@ jobs:
         </body>
         </html>
         EOF
+
+    - name: 📣 Send report links to Discord
+      if: always()
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        REPORT_URL_HTML: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/${{ github.run_number }}/index.html
+        REPORT_URL_ALLURE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/${{ github.run_number }}/allure/index.html
+      run: |
+        curl -X POST -H "Content-Type: application/json" \
+        -d '{
+          "username": "Playwright Reporter 🤖",
+          "embeds": [{
+            "title": "✅ Test Reports for Build #${{ github.run_number }}",
+            "color": 5814783,
+            "fields": [
+              {
+                "name": "HTML Report",
+                "value": "'"$REPORT_URL_HTML"'"
+              },
+              {
+                "name": "Allure Report",
+                "value": "'"$REPORT_URL_ALLURE"'"
+              }
+            ],
+            "footer": {
+              "text": "Repository: ${{ github.repository }} | Branch: ${{ github.ref_name }}"
+            },
+            "timestamp": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"
+          }]
+        }' \
+        $DISCORD_WEBHOOK_URL
+      
 
     - name: 🌐 Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
