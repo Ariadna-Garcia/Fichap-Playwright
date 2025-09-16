@@ -24,7 +24,7 @@ module.exports = defineConfig({
     ...(process.env.CI || process.env.GITHUB_ACTIONS ? [['allure-playwright']] : []),
 
     // Discord reporter solo en CI/CD
-    ...(process.env.CI || process.env.GITHUB_ACTIONS ? [['./discord-reporter.js']] : [])
+    ...(process.env.CI || process.env.GITHUB_ACTIONS ? [['./reporters/discord-reporter.js']] : [])
   ],
 
   use: {
