@@ -49,6 +49,10 @@ jobs:
           npm ci
           npx playwright install --with-deps ${{ matrix.browser }}
 
+      - name: 🧹 Clean previous reports
+        run: |
+          rm -rf playwright-report test-results
+
       - name: 🎭 Run Playwright tests (HTML reporter limpio)
         run: |
           npx playwright test --project=${{ matrix.browser }} --reporter=html
