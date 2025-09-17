@@ -31,7 +31,7 @@ module.exports = defineConfig({
   ],
 
   use: {
-    baseURL: process.env.BASE_URL || 'https://playwright.dev',
+    baseURL: process.env.BASE_URL || 'https://dashboard-test.fichap.com',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -46,7 +46,7 @@ module.exports = defineConfig({
       name: 'Dev',
       use: { 
         ...devices['Desktop Chrome'],
-        baseURL: process.env.DEV_BASE_URL || 'https://api-dev.fichap.com',
+        baseURL: process.env.DEV_BASE_URL || 'https://dashboard-dev.fichap.com',
       },
       testMatch: /.*\.spec\.(js|ts)/,
     },
@@ -54,7 +54,7 @@ module.exports = defineConfig({
       name: 'Test', 
       use: { 
         ...devices['Desktop Chrome'],
-        baseURL: process.env.TEST_BASE_URL || 'https://api-test.fichap.com',
+        baseURL: process.env.TEST_BASE_URL || 'https://dashboard-test.fichap.com', 
       },
       testMatch: /.*\.spec\.(js|ts)/,
     },

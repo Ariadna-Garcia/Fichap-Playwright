@@ -57,14 +57,27 @@ jobs:
           echo "${{ secrets.OPENVPN_CONFIG }}" > vpn.conf
           echo "${{ secrets.OPENVPN_USER }}" > user.txt
           echo "${{ secrets.OPENVPN_PASS }}" >> user.txt
-          sudo openvpn --config vpn.conf --auth-user-pass user.txt &
-          sleep 15
+          # Ejecuta en background y guarda el PID
+          sudo openvpn --config vpn.conf --auth-user-pass user.txt --daemon
+          echo "Esperando que la VPN se levante..."
+          sleep 20
+          # Verifica que la interfaz tun esté activa
+          ip a | grep tun || (echo "❌ No se levantó la interfaz tun" && exit 1)
+
+      - name: ✅ Test VPN connectivity
+        run: |
+          echo "Probando acceso a dashboard-test..."
+          if ! curl -I --max-time 15 https://dashboard-test.fichap.com; then
+            echo "❌ No se pudo acceder a dashboard-test.fichap.com a través de la VPN"
+            exit 1
+          fi
+
 
       - name: 🧹 Clean previous reports
         run: |
           rm -rf playwright-report test-results
 
-      - name: 🎭 Run Playwright tests (HTML reporter limpio)
+      - name: 🎭 Run Playwright tests
         run: |
           npx playwright test --project=${{ matrix.browser }} --reporter=html
         env:
@@ -76,8 +89,6 @@ jobs:
         run: |
           test -d playwright-report || (echo "No se encontró playwright-report" && exit 1)
           mkdir -p zipped
-          # Opcional: incluir trazas si las generás (descomenta la línea siguiente)
-          # cp -r test-results playwright-report/_traces 2>/dev/null || true
           zip -r "zipped/playwright-report-${{ matrix.browser }}-${{ github.run_number }}.zip" playwright-report
 
       - name: 📤 Send ZIP to Discord
