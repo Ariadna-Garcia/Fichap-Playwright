@@ -49,6 +49,17 @@ jobs:
           npm ci
           npx playwright install --with-deps ${{ matrix.browser }}
 
+      - name: 🛠️ Install OpenVPN
+        run: sudo apt-get update && sudo apt-get install -y openvpn
+
+      - name: 🔗 Connect to VPN
+        run: |
+          echo "${{ secrets.OPENVPN_CONFIG }}" > vpn.conf
+          echo "${{ secrets.OPENVPN_USER }}" > user.txt
+          echo "${{ secrets.OPENVPN_PASS }}" >> user.txt
+          sudo openvpn --config vpn.conf --auth-user-pass user.txt &
+          sleep 15
+
       - name: 🧹 Clean previous reports
         run: |
           rm -rf playwright-report test-results
