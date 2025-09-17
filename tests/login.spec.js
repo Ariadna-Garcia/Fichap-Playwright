@@ -10,10 +10,10 @@ test.describe('Login Tests @Regression @Login', () => {
     
     // WHEN - Usuario ingresa credenciales válidas
     await page.getByRole('textbox', { name: 'Email o Usuario' }).click();
-    await page.getByRole('textbox', { name: 'Email o Usuario' }).fill('GestionHR');
+    await page.getByRole('textbox', { name: 'Email o Usuario' }).fill(process.env.LOGIN_EMAIL);
     
     await page.getByRole('textbox', { name: 'Contraseña' }).click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('AwTDdFOVki');
+    await page.getByRole('textbox', { name: 'Contraseña' }).fill(process.env.LOGIN_PASSWORD);
     
     await page.getByRole('button', { name: 'Ingresar' }).click();
     

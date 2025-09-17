@@ -3,3 +3,4 @@
 /workspace.xml
 /test-results/
 /playwright-report/
+/.env/
