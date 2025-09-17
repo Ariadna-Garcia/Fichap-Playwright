@@ -64,6 +64,15 @@ jobs:
           # Verifica que la interfaz tun esté activa
           ip a | grep tun || (echo "❌ No se levantó la interfaz tun" && exit 1)
 
+      - name: 🔍 Debug VPN connection
+        run: |
+          echo "=== Interfaces de red ==="
+          ip a
+          echo "=== Tabla de rutas ==="
+          ip route
+          echo "=== DNS configurados ==="
+          cat /etc/resolv.conf || echo "No se pudo leer resolv.conf"
+
       - name: ✅ Test VPN connectivity
         run: |
           echo "Probando acceso a dashboard-test..."
@@ -71,7 +80,6 @@ jobs:
             echo "❌ No se pudo acceder a dashboard-test.fichap.com a través de la VPN"
             exit 1
           fi
-
 
       - name: 🧹 Clean previous reports
         run: |
@@ -82,7 +90,6 @@ jobs:
           npx playwright test --project=${{ matrix.browser }} --reporter=html
         env:
           NODE_ENV: ${{ github.event.inputs.environment || 'test' }}
-
 
       - name: 🗜️ Zip Playwright HTML report
         if: always()
