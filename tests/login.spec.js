@@ -49,7 +49,7 @@ test('Login fallido por campos vacios', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Email o Usuario' }).click();
   await page.getByRole('textbox', { name: 'Email o Usuario' }).fill('usuarioFalso');
   await page.getByRole('textbox', { name: 'Contraseña' }).click();
-  await page.getByRole('textbox', { name: 'Contraseña' }).fill('AwTDdFOVki');
+  await page.getByRole('textbox', { name: 'Contraseña' }).fill(process.env.LOGIN_PASSWORD);
   await page.getByRole('button', { name: 'Ingresar' }).click();
 
       //THEN - El usuario no podra ingresar y vera el cartel de advertencia
@@ -66,7 +66,7 @@ test('Login fallido por campos vacios', async ({ page }) => {
 
     // WHEN - El usuario ingresa una contraseña NO válida
   await page.getByRole('textbox', { name: 'Email o Usuario' }).click();
-  await page.getByRole('textbox', { name: 'Email o Usuario' }).fill('GestionHR');
+  await page.getByRole('textbox', { name: 'Email o Usuario' }).fill(process.env.LOGIN_EMAIL);
   await page.getByRole('textbox', { name: 'Contraseña' }).click();
   await page.getByRole('textbox', { name: 'Contraseña' }).fill('2025CR');
   await page.getByRole('button', { name: 'Ingresar' }).click();
