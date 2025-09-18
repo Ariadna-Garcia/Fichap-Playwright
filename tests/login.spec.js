@@ -6,8 +6,11 @@ test.describe('Login Tests @Regression @Login', () => {
     //Login exitoso
   test('@Smoke - Login exitoso', async ({ page }) => {
     // GIVEN - Usuario está en la página de login
-    await page.goto('https://dashboard-test.fichap.com/#/auth/login');
-    
+    await page.goto('https://dashboard-test.fichap.com/#/auth/login', {
+      waitUntil: 'networkidle',
+      timeout: 90000
+    });
+
     // WHEN - Usuario ingresa credenciales válidas
     await page.getByRole('textbox', { name: 'Email o Usuario' }).click();
     await page.getByRole('textbox', { name: 'Email o Usuario' }).fill(process.env.LOGIN_EMAIL);
