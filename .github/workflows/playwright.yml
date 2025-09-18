@@ -52,17 +52,12 @@ jobs:
       - name: 🛠️ Install OpenVPN
         run: sudo apt-get update && sudo apt-get install -y openvpn
 
-      - name: 🔗 Connect to VPN
+      - name: 🔗 Connect to VPN (debug)
         run: |
           echo "${{ secrets.OPENVPN_CONFIG }}" > vpn.conf
           echo "${{ secrets.OPENVPN_USER }}" > user.txt
           echo "${{ secrets.OPENVPN_PASS }}" >> user.txt
-          # Ejecuta en background y guarda el PID
-          sudo openvpn --config vpn.conf --auth-user-pass user.txt --daemon
-          echo "Esperando que la VPN se levante..."
-          sleep 20
-          # Verifica que la interfaz tun esté activa
-          ip a | grep tun || (echo "❌ No se levantó la interfaz tun" && exit 1)
+          sudo openvpn --config vpn.conf --auth-user-pass user.txt --verb 4
 
       - name: Diagnóstico:Mostrar configuración VPN
         run: head -20 vpn.conf
