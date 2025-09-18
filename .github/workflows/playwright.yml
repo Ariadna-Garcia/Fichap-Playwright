@@ -48,48 +48,6 @@ jobs:
         run: |
           npm ci
           npx playwright install --with-deps ${{ matrix.browser }}
-
-      - name: 🛠️ Install OpenVPN
-        run: sudo apt-get update && sudo apt-get install -y openvpn
-
-      - name: 🔗 Connect to VPN (debug)
-        run: |
-          echo "${{ secrets.OPENVPN_CONFIG }}" > vpn.conf
-          echo "${{ secrets.OPENVPN_USER }}" > user.txt
-          echo "${{ secrets.OPENVPN_PASS }}" >> user.txt
-          sudo openvpn --config vpn.conf --auth-user-pass user.txt --verb 4
-
-      - name: Diagnóstico:Mostrar configuración VPN
-        run: head -20 vpn.conf
-
-      - name: Diagnóstico:Verificar log de OpenVPN
-        run: cat /var/log/syslog | grep openvpn || echo "No hay log de OpenVPN"
-
-      - name: Diagnóstico:Verificar interfaces de red
-        run: ip a
-
-      - name: Diagnóstico:Probar acceso a dashboard-test
-        run: |
-          echo "Probando acceso a dashboard-test..."
-          curl -I https://dashboard-test.fichap.com || (echo "❌ No se pudo acceder a dashboard-test.fichap.com a través de la VPN" && exit 1)
-
-      - name: 🔍 Debug VPN connection
-        run: |
-          echo "=== Interfaces de red ==="
-          ip a
-          echo "=== Tabla de rutas ==="
-          ip route
-          echo "=== DNS configurados ==="
-          cat /etc/resolv.conf || echo "No se pudo leer resolv.conf"
-
-      - name: ✅ Test VPN connectivity
-        run: |
-          echo "Probando acceso a dashboard-test..."
-          if ! curl -I --max-time 15 https://dashboard-test.fichap.com; then
-            echo "❌ No se pudo acceder a dashboard-test.fichap.com a través de la VPN"
-            exit 1
-          fi
-
       - name: 🧹 Clean previous reports
         run: |
           rm -rf playwright-report test-results
