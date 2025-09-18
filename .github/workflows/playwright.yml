@@ -64,6 +64,20 @@ jobs:
           # Verifica que la interfaz tun esté activa
           ip a | grep tun || (echo "❌ No se levantó la interfaz tun" && exit 1)
 
+      - name: Diagnóstico: Mostrar configuración VPN
+        run: head -20 vpn.conf
+
+      - name: Diagnóstico: Verificar log de OpenVPN
+        run: cat /var/log/syslog | grep openvpn || echo "No hay log de OpenVPN"
+
+      - name: Diagnóstico: Verificar interfaces de red
+        run: ip a
+
+      - name: Diagnóstico: Probar acceso a dashboard-test
+        run: |
+          echo "Probando acceso a dashboard-test..."
+          curl -I https://dashboard-test.fichap.com || (echo "❌ No se pudo acceder a dashboard-test.fichap.com a través de la VPN" && exit 1)
+
       - name: 🔍 Debug VPN connection
         run: |
           echo "=== Interfaces de red ==="
